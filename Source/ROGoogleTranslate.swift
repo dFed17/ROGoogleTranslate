@@ -55,7 +55,7 @@ open class ROGoogleTranslate {
         if let urlEncodedText = params.text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
             if let url = URL(string: "https://translation.googleapis.com/language/translate/v2?key=\(self.apiKey)&q=\(urlEncodedText)&source=\(params.source)&target=\(params.target)&format=text") {
             
-                URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+                let httprequest = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                     guard error == nil else {
                         print("Something went wrong: \(String(describing: error?.localizedDescription))")
                         return
@@ -91,9 +91,9 @@ open class ROGoogleTranslate {
                             print("Serialization failed: \(error.localizedDescription)")
                         }
                     }
-                }).resume()
+                })
                 
-                
+            httprequest.resume()
             }
         }
     }
